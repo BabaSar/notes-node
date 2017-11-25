@@ -2,23 +2,32 @@
 
 const fs = require('fs');
 const _ = require('lodash');
-const yargs = require('yargs');
+const yargs = require('yargs'); //great for --key=value pairs
 
 const notes = require("./notes.js");
 
-var command = process.argv[2];
+var command = yargs.argv._[0];
+
+
 
 if(command === 'add'){
     console.log("adding new note");
+    //we want to be able to specify --title=someTitle --body=someBody
+    notes.addNote(yargs.argv.title, yargs.argv.body);
+
 }else if (command === 'list'){
-    console.log("listing all notes");
+    notes.getAll();
+
 }else if (command === 'read'){
-    console.log("reading note");
+    notes.getNote(yargs.argv.title);
+
 }else if (command === 'remove'){
-    console.log("removing note");
+    notes.removeNote(yargs.argv.title);
+
 }else{
     console.log("command not recognized");
 };
 
 
 
+//getNote(title) / removeNote(title)
