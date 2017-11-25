@@ -1,0 +1,22 @@
+{
+  "name": "notes-node",
+  "version": "1.0.0",
+  "description": "notes-node tutorial",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BabaSar/notes-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BabaSar/notes-node/issues"
+  },
+  "homepage": "https://github.com/BabaSar/notes-node#readme",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}
