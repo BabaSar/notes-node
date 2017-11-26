@@ -25,11 +25,18 @@ if(command === 'add'){
     notes.getAll();
 
 }else if (command === 'read'){
-    notes.getNote(yargs.argv.title);
+    var note = notes.getNote(yargs.argv.title);
+    if (note){
+        console.log("note found");
+        console.log("---");
+        console.log(note);
+    }else{
+        console.log("note not found");
+    }
 
 }else if (command === 'remove'){
     var noteRemoved = notes.removeNote(yargs.argv.title);
-    
+
     if (noteRemoved){
         console.log("note removed");
     }else{

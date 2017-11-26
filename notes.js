@@ -62,17 +62,18 @@ var getAll = () => {
 };
 
 var getNote = (title) => {
-    console.log("Getting note:", title);
+    //console.log("Getting note:", title);
 
     var notes =  fetchNotes();
 
-    for (var i=0; i<notes.length; i++){
-        if(notes[i].title === title){
-            console.log(notes[i].title + "-" + notes[i].body);
-        }
-    }
+    // for (var i=0; i<notes.length; i++){
+    //     if(notes[i].title === title){
+    //         console.log(notes[i].title + "-" + notes[i].body);
+    //     }
+    // }
 
-
+    var filteredNotes = notes.filter((note) => note.title === title);
+    return filteredNotes[0];
 };
 
 var removeNote = (title) => {
