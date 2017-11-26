@@ -1,38 +1,32 @@
 const fs = require('fs');
 
 var fetchNotes = () => {
+    try{
+        //fetch the existing notes
+        var notesString = fs.readFileSync('notes-data.json');
+        return JSON.parse(notesString); //bring it back into an object
 
+    }catch(e){
+        return []; //returns an empty array as opposed to JSON array of objects
+    }
 };
 
-var saveNotes = () => {
-
+var saveNotes = (notes) => {
+    fs.writeFileSync('notes-data.json', JSON.stringify(notes));
 };
 
 var addNote = (title, body) => {
     console.log("Adding note:", title, body)
-    var notes = [];
+    var notes =  fetchNotes();
     var note = {
       title,
       body
     };
 
-    try{
-        //fetch the existing notes
-        var notesString = fs.readFileSync('notes-data.json');
-        notes = JSON.parse(notesString); //bring it back into an object
-
-
-
-
-    }catch(e){
-        console.log("Could not fetch from notes-data.json file!");
-        console.log("notes-data.json file will be created")
-    }
-
     var dupes = [];
 
     for (var i=0; i<notes.length; i++) {
-        console.log(i, notes[i].title);
+        //console.log(i, notes[i].title);
 
         if(notes[i].title === title){
             dupes.push(title);
@@ -49,24 +43,17 @@ var addNote = (title, body) => {
         //push into array
         notes.push(note);
         //write JSON string to file
-        fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+        saveNotes(notes);
+        //return the note thats getting added
+        return note;
     }
-
-
-
-
 
 }
 
 var getAll = () => {
     console.log("Getting all notes");
 
-    try{
-        var notesString = fs.readFileSync('notes-data.json'); //read JSON string into variable
-        notes = JSON.parse(notesString); //parse it back into an object
-    }catch(e){
-        console.log("Could not get json file");
-    }
+    var notes =  fetchNotes();
 
     for (var i=0; i<notes.length; i++){
         console.log(notes[i].title + "-" + notes[i].body);
@@ -77,12 +64,7 @@ var getAll = () => {
 var getNote = (title) => {
     console.log("Getting note:", title);
 
-    try{
-        var notesString = fs.readFileSync('notes-data.json'); //read JSON string into variable
-        notes = JSON.parse(notesString); //parse it back into an object
-    }catch(e){
-        console.log("Could not get json file");
-    }
+    var notes =  fetchNotes();
 
     for (var i=0; i<notes.length; i++){
         if(notes[i].title === title){
@@ -95,6 +77,13 @@ var getNote = (title) => {
 
 var removeNote = (title) => {
     console.log("Removing note:", title);
+
+    var notes =  fetchNotes();
+    var filteredNotes = notes.filter((note) => note.title != title);
+    saveNotes(filteredNotes);
+
+    return notes.length !== filteredNotes.length;
+
 };
 
 module.exports = {

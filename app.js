@@ -13,7 +13,13 @@ var command = yargs.argv._[0];
 if(command === 'add'){
     console.log("adding new note");
     //we want to be able to specify --title=someTitle --body=someBody
-    notes.addNote(yargs.argv.title, yargs.argv.body);
+    var note = notes.addNote(yargs.argv.title, yargs.argv.body);
+
+    if (note === undefined){ //if(note) works too
+        console.log("undefined was returned");
+    }else{
+        console.log("note created...");
+    }
 
 }else if (command === 'list'){
     notes.getAll();
@@ -22,7 +28,13 @@ if(command === 'add'){
     notes.getNote(yargs.argv.title);
 
 }else if (command === 'remove'){
-    notes.removeNote(yargs.argv.title);
+    var noteRemoved = notes.removeNote(yargs.argv.title);
+    
+    if (noteRemoved){
+        console.log("note removed");
+    }else{
+        console.log("note not found");
+    }
 
 }else{
     console.log("command not recognized");
